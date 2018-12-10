@@ -1,20 +1,20 @@
-import Router from 'koa-router';
-import Province from '../models/province';
-import Menu from '../models/menu';
-import City from '../models/city';
+import Router from "koa-router";
+import Province from "../models/province";
+import Menu from "../models/menu";
+import City from "../models/city";
 
 
 let geoRouter = new Router({
-  prefix: '/geo'
+  prefix: "/geo"
 });
 
-const sign = 'getGeoSign';
+const sign = "getGeoSign";
 
-geoRouter.get('/getPosition', async ctx => {
+geoRouter.get("/getPosition", async ctx => {
   // let {status, data: {province, city}} = await axios.get(`http://cp-tools.cn/geo/getPosition?sign=${sign}`);
   let status = 200;
-  let province = '海南省';
-  let city = '三亚市';
+  let province = "北京";
+  let city = "北京市";
   if (status === 200) {
     ctx.body = {
       province,
@@ -22,13 +22,13 @@ geoRouter.get('/getPosition', async ctx => {
     };
   } else {
     ctx.body = {
-      province: '',
-      city: ''
+      province: "",
+      city: ""
     };
   }
 });
 
-geoRouter.get('/province', async ctx => {
+geoRouter.get("/province", async ctx => {
   let province = await Province.find();
   ctx.body = {
     province: province.map(item => {
@@ -40,7 +40,7 @@ geoRouter.get('/province', async ctx => {
   };
 });
 
-geoRouter.get('/province/:id', async (ctx) => {
+geoRouter.get("/province/:id", async (ctx) => {
   let city = await City.findOne({ id: ctx.params.id });
 
   ctx.body = {
@@ -55,7 +55,7 @@ geoRouter.get('/province/:id', async (ctx) => {
   };
 });
 
-geoRouter.get('/city', async (ctx) => {
+geoRouter.get("/city", async (ctx) => {
   let city = [];
   let result = await City.find();
   result.forEach(item => {
@@ -67,7 +67,7 @@ geoRouter.get('/city', async (ctx) => {
       return {
         province: item.province,
         id: item.id,
-        name: item.name === '市辖区' || item.name === '省直辖县级行政区划'
+        name: item.name === "市辖区" || item.name === "省直辖县级行政区划"
           ? item.province
           : item.name
       };
@@ -75,7 +75,7 @@ geoRouter.get('/city', async (ctx) => {
   };
 });
 
-geoRouter.get('/menu', async ctx => {
+geoRouter.get("/menu", async ctx => {
   const result = await Menu.findOne();
   if (result) {
     ctx.body = {
@@ -89,18 +89,18 @@ geoRouter.get('/menu', async ctx => {
 
 });
 
-geoRouter.get('/hotCity', async (ctx) => {
+geoRouter.get("/hotCity", async (ctx) => {
   let list = [
-    '北京市',
-    '上海市',
-    '广州市',
-    '深圳市',
-    '天津市',
-    '西安市',
-    '杭州市',
-    '南京市',
-    '武汉市',
-    '成都市'
+    "北京市",
+    "上海市",
+    "广州市",
+    "深圳市",
+    "天津市",
+    "西安市",
+    "杭州市",
+    "南京市",
+    "武汉市",
+    "成都市"
   ];
   let result = await City.find();
   let nList = [];
