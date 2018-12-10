@@ -14,6 +14,7 @@ import passport from "./dbs/interface/utils/passport";
 import usersRouter from "./dbs/interface/users";
 import geoRouter from "./dbs/interface/geo";
 import searchRouter from "./dbs/interface/search";
+import categoryRouter from "./dbs/interface/category";
 
 const app = new Koa();
 const host = process.env.HOST || "127.0.0.1";
@@ -52,6 +53,7 @@ async function start() {
   app.use(usersRouter.routes()).use(usersRouter.allowedMethods());
   app.use(geoRouter.routes()).use(geoRouter.allowedMethods());
   app.use(searchRouter.routes()).use(searchRouter.allowedMethods());
+  app.use(categoryRouter.routes()).use(categoryRouter.allowedMethods());
   // *********挂载接口路由(注意位置)**************
 
 

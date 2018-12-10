@@ -12,6 +12,7 @@
       v-for="item in block"
       :key="item.title"
       class="m-categroy-section">
+      <!--利用a标签的锚点功能-->
       <dt :id="'city-'+item.title">{{ item.title }}</dt>
       <dd>
         <span
@@ -23,41 +24,60 @@
 </template>
 
 <script>
-  import pyjs from 'js-pinyin';
+  import pyjs from "js-pinyin";
 
   export default {
     data() {
       return {
-        list: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''),
+        list: "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(""),
         block: []
       };
     },
     async mounted() {
       let self = this;
       let blocks = [];
-      let { status, data: { city } } = await self.$axios.get('/geo/city');
+      let { status, data: { city } } = await self.$axios.get("/geo/city");
+      console.log(city.length);
       if (status === 200) {
         let p;
         let c;
         let d = {};
-        city.forEach(item => {
-          p = pyjs.getFullChars(item.name).toLocaleLowerCase().slice(0, 1);
-          c = p.charCodeAt(0);
-          if (c > 96 && c < 123) {
-            if (!d[p]) {
-              d[p] = [];
+        if (city.length) {
+          city.forEach(item => {
+            p = pyjs.getFullChars(item.name).toLocaleLowerCase().slice(0, 1);
+            c = p.charCodeAt(0);
+            if (c > 96 && c < 123) {
+              if (!d[p]) {
+                d[p] = [];
+              }
+              d[p].push(item.name);
             }
-            d[p].push(item.name);
-          }
-        });
-        for (let [k, v] of Object.entries(d)) {
-          blocks.push({
-            title: k.toUpperCase(),
-            city: v
           });
+          for (let [k, v] of Object.entries(d)) {
+            blocks.push({
+              title: k.toUpperCase(),
+              city: v
+            });
+          }
+          blocks.sort((a, b) => a.title.charCodeAt(0) - b.title.charCodeAt(0));
+          self.block = blocks;
+        } else {
+          console.log("1");
+          this.block = [
+            {
+              title: "A",
+              city: ["a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a"]
+            },
+            {
+              title: "B",
+              city: ["b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b"]
+            },
+            {
+              title: "C",
+              city: ["c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c", "c"]
+            }
+          ];
         }
-        blocks.sort((a, b) => a.title.charCodeAt(0) - b.title.charCodeAt(0));
-        self.block = blocks;
       }
     }
   };
