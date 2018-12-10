@@ -55,6 +55,7 @@
         }
       });
       if (status === 200 && count > 0 && status2 === 200) {
+        // asyncData生命周期给data数据赋值是直接return的
         return {
           list: pois.filter(item => item.photos.length).map(item => {
             return {
