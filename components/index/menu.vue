@@ -4,12 +4,12 @@
       class="nav"
       @mouseleave="handleMouseLeave">
       <dt>全部分类</dt>
-      <!--<dd-->
-      <!--v-for="(item, index) in $store.state.home.menu"-->
-      <!--:key="index"-->
-      <!--@mouseenter="handleMouseEnter">-->
-      <!--<i :class="item.type"/>{{ item.name }}<span class="arrow"/>-->
-      <!--</dd>-->
+      <dd
+      v-for="(item, index) in $store.state.home.menu"
+      :key="index"
+      @mouseenter="handleMouseEnter">
+      <i :class="item.type"/>{{ item.name }}<span class="arrow"/>
+      </dd>
     </dl>
     <div
       v-if="kind"

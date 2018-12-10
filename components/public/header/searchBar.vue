@@ -15,6 +15,7 @@
         class="center">
         <div class="wrapper">
           <el-input
+            v-model="search"
             placeholder="搜索商家或地点"
             @focus="handleFocus"
             @blur="handleBlur"
@@ -24,43 +25,27 @@
             v-if="isHotPlace"
             class="hotPlace">
             <dt>热门搜索</dt>
-            <dd>好冷</dd>
-            <dd>好冷</dd>
-            <dd>好冷</dd>
-            <dd>好冷</dd>
-            <dd>好冷</dd>
-            <!--<dd-->
-              <!--v-for="(item, index) in $store.state.home.hotPlace"-->
-              <!--:key="index">-->
-              <!--<a :href="'/products?keyword=' + encodeURIComponent(item.name)">{{ item.name }}</a>-->
-            <!--</dd>-->
+            <dd
+              v-for="(item, index) in $store.state.home.hotPlace"
+              :key="index">
+              <a :href="'/products?keyword=' + encodeURIComponent(item.name)">{{ item.name }}</a>
+            </dd>
           </dl>
           <dl
             v-if="isSearchList"
             class="searchList">
-            <dd>好冷</dd>
-            <dd>好冷</dd>
-            <dd>好冷</dd>
-            <dd>好冷</dd>
-            <dd>好冷</dd>
-            <!--<dd-->
-              <!--v-for="(item, index) in searchList"-->
-              <!--:key="index">-->
-              <!--<a :href="'/products?keyword=' + encodeURIComponent(item.name)">{{ item.name }}</a>-->
-            <!--</dd>-->
+            <dd
+              v-for="(item, index) in searchList"
+              :key="index">
+              <a :href="'/products?keyword=' + encodeURIComponent(item.name)">{{ item.name }}</a>
+            </dd>
           </dl>
         </div>
         <p class="suggest">
-          <a href="javascript:void(0)">心好冷</a>
-          <a href="javascript:void(0)">心好冷</a>
-          <a href="javascript:void(0)">心好冷</a>
-          <a href="javascript:void(0)">心好冷</a>
-          <a href="javascript:void(0)">心好冷</a>
-          <a href="javascript:void(0)">心好冷</a>
-          <!--<a-->
-          <!--v-for="(item, index) in $store.state.home.hotPlace"-->
-          <!--:key="index"-->
-          <!--:href="'/products?keyword=' + encodeURIComponent(item.name)">{{ item.name }}</a>-->
+          <a
+            v-for="(item, index) in $store.state.home.hotPlace"
+            :key="index"
+            :href="'/products?keyword=' + encodeURIComponent(item.name)">{{ item.name }}</a>
         </p>
         <ul class="nav">
           <li>
