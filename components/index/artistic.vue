@@ -33,7 +33,7 @@
       >品质出游
       </dd>
     </dl>
-    <ul class="ibody">
+    <ul class="ibody" v-if="current.length">
       <li
         v-for="item in current"
         :key="item.title"
@@ -50,6 +50,14 @@
         </el-card>
       </li>
     </ul>
+    <el-card v-else>
+      <div style="padding: 14px;">
+        <span>谁能给个{{kind}}数据源啊??????</span>
+        <div class="bottom clearfix">
+          没有{{kind}}数据蓝瘦香菇,emmmm............
+        </div>
+      </div>
+    </el-card>
   </section>
 </template>
 
@@ -57,7 +65,7 @@
   export default {
     data() {
       return {
-        kind: 'all',
+        kind: "all",
         list: {
           all: [],
           party: [],
@@ -77,11 +85,12 @@
         let dom = e.target;
         let tag = dom.tagName.toLowerCase();
         let self = this;
-        if (tag === 'dd') {
-          this.kind = dom.getAttribute('kind');
-          let keyword = dom.getAttribute('keyword');
+        if (tag === "dd") {
+          this.kind = dom.getAttribute("kind");
+          let keyword = dom.getAttribute("keyword");
           console.log(this.kind, keyword);
-          let { status, data: { count, pois } } = await self.$axios.get('/search/resultsByKeywords', {
+          // 没有数据蓝瘦香菇
+          let { status, data: { count, pois } } = await self.$axios.get("/search/resultsByKeywords", {
             params: {
               keyword,
               city: self.$store.state.geo.position.city
@@ -91,10 +100,10 @@
             let r = pois.filter(item => item.photos.length).map(item => {
               return {
                 title: item.name,
-                pos: item.type.split(';')[0],
-                price: item.biz_ext.cost || '暂无',
+                pos: item.type.split(";")[0],
+                price: item.biz_ext.cost || "暂无",
                 img: item.photos[0].url,
-                url: '//abc.com'
+                url: "//abc.com"
               };
             });
             self.list[self.kind] = r.slice(0, 9);
