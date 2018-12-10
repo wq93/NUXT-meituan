@@ -8,7 +8,7 @@ let geoRouter = new Router({
   prefix: "/geo"
 });
 
-const sign = "getGeoSign";
+const sign = "d8402a2b5ad7e02e80108270d71831cc";
 
 geoRouter.get("/getPosition", async ctx => {
   // let {status, data: {province, city}} = await axios.get(`http://cp-tools.cn/geo/getPosition?sign=${sign}`);
